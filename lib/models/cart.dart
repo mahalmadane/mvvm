@@ -4,7 +4,7 @@ class Article{
   final String description;
   final double price;
   final String image;
-  final int quantity;
+  int quantity;
 
   Article({
     required this.id,

@@ -18,7 +18,8 @@ class _PanierState extends State<Panier> {
 
   @override
   Widget build(BuildContext context) {
-    final panier = Provider.of<Modelviewarticle>(context).panier;
+    final provideArticles = Provider.of<Modelviewarticle>(context);
+    List<Article> panier = provideArticles.panier;
     return Scaffold(
       appBar: AppBar(title: Text("Panier")),
 
@@ -38,12 +39,20 @@ class _PanierState extends State<Panier> {
                     width: 100,
                     fit: BoxFit.cover,
                   ),
+                  subtitle: Text(
+                    " ${article.price}\$ *${article.quantity} = ${article.price * article.quantity}\$",
+                  ),
                 ),
               ),
               Positioned(
                 right: 10,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("Article supprimé du panier!")),
+                    );
+                    provideArticles.delete(article);
+                  },
                   icon: Icon(Icons.delete, color: Colors.red),
                 ),
               ),

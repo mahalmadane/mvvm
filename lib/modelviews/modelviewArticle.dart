@@ -30,12 +30,34 @@ class Modelviewarticle extends ChangeNotifier {
   //Ajouter
 
   //Supprimer
+  void delete(Article article) {
+    for (Article art in panier) {
+      if (art.id == article.id && art.quantity > 1) {
+        art.quantity--;
+        break;
+      }
+    }
+    if (article.quantity == 0) {
+      panier.remove(article);
+    }
+    notifyListeners();
+  }
 
   //Modifier
 
   //Ajouter au panier
   void ajouterPanier(Article article) {
-    panier.add(article);
+    bool exist = false;
+    for (Article art in panier) {
+      if (art.id == article.id) {
+        exist = true;
+        art.quantity++;
+        break;
+      }
+    }
+    if (!exist) {
+      panier.add(article);
+    }
     notifyListeners();
   }
 }
